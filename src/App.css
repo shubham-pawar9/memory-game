@@ -32,8 +32,10 @@
 }
 .game-cards {
   display: flex;
-    height: 80vh;
-    width: 80vh;
+    /* height: 80vh;
+    width: 80vh; */
+    height: 500px;
+    width: 500px;
     justify-content: space-around;
     flex-wrap: wrap;
     align-items: center;
@@ -58,6 +60,7 @@
     position: relative;
     user-select: none;
     z-index: 1;
+    margin: 5px;
 }
 .card img:nth-child(2){
   height: 100%;

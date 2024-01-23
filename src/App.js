@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Main from "./component/Main";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 function App() {
   const [jsonData, setJsonData] = useState([]);
   const [count, setCount] = useState(10);
@@ -10,6 +10,9 @@ function App() {
   const [numbers, setNumbers] = useState(
     Array.from({ length: 8 }, (_, index) => index + 1)
   );
+  const winAudioRef = useRef();
+  const lossAudioRef = useRef();
+  const startAudioRef = useRef();
   const handlePlayGame = () => {
     const newArray = [...numbers];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -29,6 +32,13 @@ function App() {
     setCount(10);
   };
   useEffect(() => {
+    if (gameStatus === "win") {
+      winAudioRef.current.play();
+    } else if (gameStatus === "over") {
+      lossAudioRef.current.play();
+    } else if (gameStatus === "playing") {
+      startAudioRef.current.play();
+    }
     console.log(gameStatus);
   }, [gameStatus]);
   return (
@@ -114,6 +124,21 @@ function App() {
           </div>
         )}
       </div>
+      <audio
+        id="audio2"
+        ref={winAudioRef}
+        src={process.env.PUBLIC_URL + "/audio/win.mp3"}
+      ></audio>
+      <audio
+        id="audio3"
+        ref={lossAudioRef}
+        src={process.env.PUBLIC_URL + "/audio/loss.mp3"}
+      ></audio>
+      <audio
+        id="audio4"
+        ref={startAudioRef}
+        src={process.env.PUBLIC_URL + "/audio/start.mp3"}
+      ></audio>
     </div>
   );
 }

@@ -10,10 +10,12 @@ const Main = ({
   gameStatus,
 }) => {
   const [activeCard, setActiveAcrd] = useState([]);
+  const clickAudioRef = useRef();
+
   const handleCard = (e, items) => {
     setActiveAcrd(() => [...activeCard, items]);
-    // console.log(e.target.parentElement);
     e.target.parentElement.classList.add("active");
+    clickAudioRef.current.play();
   };
   useEffect(() => {
     if (activeCard.length != 0 && activeCard[0] == activeCard[1]) {
@@ -24,7 +26,6 @@ const Main = ({
             setGameStatus("win");
           }, 1000)
         : setGameStatus("playing");
-      //   console.log(activeCard, "check true");
     } else if (activeCard.length >= 2 && activeCard[0] != activeCard[1]) {
       for (let i = 0; i < activeCard.length; i++) {
         setTimeout(() => {
@@ -66,6 +67,11 @@ const Main = ({
               </div>
             );
           })}
+        <audio
+          id="audio1"
+          ref={clickAudioRef}
+          src={process.env.PUBLIC_URL + "/audio/click.mp3"}
+        ></audio>
       </div>
     </>
   );
